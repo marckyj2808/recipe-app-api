@@ -18,6 +18,7 @@ def create_user(**params):
     """Create and return a new user"""
     return get_user_model().objects.create_user(**params)
 
+
 class PublicUserApiTests(TestCase):
     """Test the public features of the user API"""
 
@@ -83,7 +84,6 @@ class PublicUserApiTests(TestCase):
         self.assertIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-
     def test_create_token_bad_credentials(self):
         """Test returns error"""
         create_user(email='test@example.com', password='goodpass')
@@ -106,7 +106,6 @@ class PublicUserApiTests(TestCase):
         res = self.client.get(ME_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
-
 
 
 class PrivateUserApiTests(TestCase):
@@ -147,4 +146,3 @@ class PrivateUserApiTests(TestCase):
         self.assertEqual(self.user.name, payload['name'])
         self.assertTrue(self.user.check_password(payload['password']))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-
